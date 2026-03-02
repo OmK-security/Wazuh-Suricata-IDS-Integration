@@ -56,16 +56,15 @@ The final verification was performed by monitoring the `archives.json` log strea
 
 ---
 
-## 💡 Technical Reflection: CLI vs. Dashboard Validation
+## 🛠️ Challenges & Troubleshooting: The "CLI vs. Dashboard" Gap
 
-A critical takeaway from this integration was the importance of multi-layered verification. While the Wazuh Dashboard encountered indexing latency, a common occurrence in resource-constrained virtual environments, the integrity of the data pipeline was successfully confirmed through low-level log analysis.
+While the backend integration was successful, a known limitation was encountered regarding the Wazuh Dashboard visualization. 
 
-**Key Technical Validations:**
-* **Process Integrity**: Verified that the Wazuh Manager remained stable with no service-level errors.
-* **Data Flow**: Confirmed that Suricata EVE JSON logs were being actively "tailed" and decoded from the `/var/log/suricata/` directory.
-* **Ingestion Proof**: Observed real-time traffic from the Kali IP (**192.168.1.5**) within the `archives.json` file.
+* **The Issue**: Despite the Wazuh Manager correctly ingesting and decoding Suricata logs, the Dashboard did not automatically render the `wazuh-archives-*` index pattern.
+* **The Diagnosis**: Verified via `ossec.log` that no manager-level errors were present. Further investigation confirmed the issue resided in the Indexer's mapping/template phase, likely due to memory constraints in the virtualized lab environment.
+* **The Validation**: To ensure the data pipeline was intact, I pivoted to CLI-based verification. Running `tail -f /var/ossec/logs/archives/archives.json` provided definitive proof of successful log ingestion and JSON decoding.
 
-This approach ensures that security monitoring remains effective even when primary visualization layers face downtime or configuration delays.
+> **Engineer's Note**: In a production SOC environment, dashboard failures occur. Demonstrating the ability to bypass the UI and verify the raw data stream is a critical skill for ensuring continuous security monitoring.
 
 ---
 
