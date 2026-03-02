@@ -56,6 +56,19 @@ The final verification was performed by monitoring the `archives.json` log strea
 
 ---
 
+## 💡 Technical Reflection: CLI vs. Dashboard Validation
+
+A critical takeaway from this integration was the importance of multi-layered verification. While the Wazuh Dashboard encountered indexing latency, a common occurrence in resource-constrained virtual environments, the integrity of the data pipeline was successfully confirmed through low-level log analysis.
+
+**Key Technical Validations:**
+* **Process Integrity**: Verified that the Wazuh Manager remained stable with no service-level errors.
+* **Data Flow**: Confirmed that Suricata EVE JSON logs were being actively "tailed" and decoded from the `/var/log/suricata/` directory.
+* **Ingestion Proof**: Observed real-time traffic from the Kali IP (**192.168.1.5**) within the `archives.json` file.
+
+This approach ensures that security monitoring remains effective even when primary visualization layers face downtime or configuration delays.
+
+---
+
 ## 🧠 Skills Demonstrated
 * **Linux Administration**: Managing system services and navigating protected log directories.
 * **SIEM/IDS Integration**: Mapping external tool logs (Suricata) to a SIEM ingest pipeline.
